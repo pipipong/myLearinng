@@ -99,3 +99,243 @@ let strLength: number = (<string>someValue).length
 let strLength: number = (someValue as string).length // 推荐
 ```
 
+
+
+## 接口
+
+### 可选属性
+
+``` typescript
+interface Square {
+    color: string
+    area: number
+}
+
+interface SquareConfig {
+    color?: string
+    width?: number
+}
+
+function createSquare (config: SquareConfig): Square {
+    let newSquare = {color: 'white', area: 100}
+    if (config.color) {
+        newSuqare.color = config.color
+    }
+    if (config.width) {
+        newSquare.area = config.width * config.width
+    }
+    return newSquare
+}
+
+let mySquare = createSquare({color: 'black'})
+```
+
+
+
+### 只读属性
+
+```typescript
+interface Point {
+	readonly x: number
+	readonly y: number
+}
+```
+
+
+
+### 属性检查
+
+```typescript
+interface SquareConfig {
+    color?: string
+    width?: number
+    [propName: string]: any // 除了color 和 width 还可能有其他类型的属性
+}
+```
+
+
+
+### 函数类型
+
+``` typescript
+interface SearchFunc {
+    (source: string, subString: string): boolean
+}
+
+let mySearch: SearchFunc
+mySearch = function (src: string, sub: string): boolean {
+    let result = src.search(sub)
+    return result > -1
+}
+
+```
+
+
+
+### 可索引的接口
+
+``` typescript
+interface StringArray {
+    [index: number]: string // 数字为索引 返回为字符串
+}
+
+let myArray: stringArray
+
+myArray = ['bob', 'Fred']
+
+let myStr:string = myArray['0']
+```
+
+
+
+### 类类型
+
+实例接口
+
+```typescript
+interface ClockInterface {
+    currentTime: Date
+    setTime(d: Date)
+}
+
+class Clock implements ClockINterface {
+    currentTime: Date
+    
+    constructor(h: number, m: number) {
+    
+    }
+    
+    setTime(d: Date) {
+        this.currentTime = d
+    }
+}
+```
+
+构造器接口
+
+``` typescript
+interface ClockInterface {
+    tick() 
+}
+
+interface ClockConstructor {
+    new(hour: number, minute: number): ClockInterface
+}
+
+function createClock(ctor: ClockConstructor, hour: numbre, minute: number): ClockInteface {
+    return new ctor(hour, minute)
+}
+
+class DigitalClock implements ClockInterface {
+    constructor(h: number, m: number) {
+        
+    }
+    
+    tick() {
+        console.log('beep beep')
+    }
+}
+
+
+class AnalogClock implements ClockInterface {
+    constructor(h: number, m: number) {
+        
+    }
+    
+    tick() {
+        console.log('tick toc')
+    }
+}
+
+let digital = createClock(DigitalClock, 12, 17)
+
+let abaloa = createClock(AnalogClock, 13, 14)
+```
+
+
+
+### 继承接口
+
+```ts
+interface Shape {
+    color: string
+}
+
+interface penStroke {
+    penWidth: number
+}
+
+interface Square extends Shape {
+    sideLength: number
+}
+
+let square = {} as Square
+square.color = 'blue'
+square.sideLength = 10
+square.penWidth = 5.0
+
+```
+
+
+
+### 混合类型
+
+```ts
+interface Counter {
+    (start: number): string,
+    interval: number
+   	reset(): void
+}
+    
+function getCounter(): Counter {
+    let counter = (function (star: number) {
+    	               
+    }) as Counter
+    
+    counter.interval = 123
+    
+    counter.reset = function () {
+        
+    }
+    
+    return counter
+}
+
+let c = getCounter()
+c(10)
+c.reset()
+c.interval = 5.0
+```
+
+
+
+### 接口继承类
+
+```ts
+class Control {
+    private state: any
+}
+
+interface SelectableControl extends Control {
+    select()
+}
+
+class Button extends Control implements SelectableControl {
+    select() {
+        
+    }
+}
+
+class TextBox extends Control {
+    select() {
+        
+    }
+}
+
+class ImageC implements SelectableControl { // 报错
+    select() {
+        
+    }
+}
+```
+
