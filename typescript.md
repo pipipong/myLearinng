@@ -339,3 +339,126 @@ class ImageC implements SelectableControl { // 报错
 }
 ```
 
+
+
+## 类
+
+### 基本示例
+
+```ts
+class Greeter {
+    greeting: string
+    
+    constructor(message: string) {
+        this.greeting = message
+    }
+    
+    greet() {
+        return 'Hello, ' + this.greeting
+    }
+}
+
+let greeter = new Greeter('world')
+greeter.greet()
+```
+
+### 继承
+
+```ts
+class Animal {
+    move(distence: number = 0) {
+        console.log(`Animal move ${distence}`)
+    }
+}
+
+
+class Dog extends Animal {
+    bark() {
+        console.log('Woof Woof!')
+    }
+}
+
+const dog = new Dog()
+dog.bark()
+dog.move(10)
+```
+
+```ts
+class Animal {
+    name: string
+
+    constructor(name: string) {
+        this.name = name
+    }
+
+    move(distence: number = 0) {
+        console.log(`Animal move ${distence}m`)
+    }
+}
+
+
+class Snake extends Animal {
+    constructor(name: string) {
+        super(name)
+    }
+
+    move(distence: number = 5) {
+        console.log('Slithering...')
+        super.move(distence)
+    }
+}
+
+class Horse extends Animal {
+    constructor(name: string) {
+        super(name)
+    }
+
+    move(distence: number = 5) {
+        console.log('Galloping...')
+        super.move(distence)
+    }
+}
+
+const tom = new Snake('tom')
+const sam: Animal = new Horse('sam')
+
+sam.move()
+tom.move(100)
+```
+
+### 公共,私有,与受保护修饰符
+
+```ts
+class Animal {
+    private name: string
+
+    constructor(name: string) {
+        this.name = name
+    }
+
+    move(distence: number = 0) {
+        console.log(`Animal move ${distence}m`)
+    }
+}
+
+class Cat extends Animal {
+    constructor() {
+        super('Cat')
+    }
+}
+
+class Emplovee {
+    private name: string
+    constructor(name: string) {
+        this.name = name
+    }
+}
+
+let anmial = new Animal('goot')
+let cat = new Cat()
+let employee = new  Emplovee('bob')
+
+cat = anmial   //对
+cat = employee //错
+```
+
